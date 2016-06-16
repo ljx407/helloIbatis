@@ -8,7 +8,7 @@
 	<!-- id表示select里的sql语句，resultClass表示返回结果的类型 -->
 	<select id="selectAllStudent" resultClass="Student">
 		select * from
-		tbl_student
+		tbl_student 
 	</select>
 	<!-- parameterClass表示参数的内容 -->
 	<!-- #表示这是一个外部调用的需要传进的参数，可以理解为占位符 -->

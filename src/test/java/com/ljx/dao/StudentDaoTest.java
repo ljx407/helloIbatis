@@ -39,13 +39,13 @@ public class StudentDaoTest {
 	@Test
 	public void testAddStudent() {
 		boolean addStudent = studentDaoImpl.addStudent(student);
-		Assert.assertTrue(addStudent);
+		assertThat(addStudent,is(true));
 	}
 
 	@Test
 	public void testDeleteStudentById() {
 		boolean deleteStudentById = studentDaoImpl.deleteStudentById(1);
-		Assert.assertTrue(deleteStudentById);
+		assertThat(deleteStudentById,is(true));
 	}
 
 	@Test
