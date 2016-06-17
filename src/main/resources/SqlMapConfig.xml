@@ -2,8 +2,21 @@
 <!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 <sqlMapConfig>
+
 	<!-- 引用JDBC属性的配置文件 -->
-	<properties resource="database.properties"/>
+	<properties resource="database.properties" />
+
+	<settings 
+	cacheModelsEnabled="true" 
+	lazyLoadingEnabled="false"
+	enhancementEnabled="true" 
+	maxSessions="64" 
+	maxTransactions="8"
+	maxRequests="128" 
+	useStatementNamespaces="true"
+	classInfoCacheEnabled="true" 
+	errorTracingEnabled="true"
+	statementCachingEnabled="true" />
 	
 	<!-- 使用JDBC的事务管理 -->
 	<transactionManager type="JDBC">
@@ -15,7 +28,7 @@
 			<property name="JDBC.Password" value="${password}" />
 		</dataSource>
 	</transactionManager>
-		
+
 	<!-- 这里可以写多个实体的映射文件 -->
 	<sqlMap resource="ibatis/Student.xml" />
 	<sqlMap resource="ibatis/Cource.xml" />

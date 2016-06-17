@@ -4,11 +4,136 @@
 
 <sqlMap namespace="cource">
 
-	<typeAlias alias="Cource" type="com.ljx.model.Cource"/>
-	
+	<typeAlias alias="Cource" type="com.ljx.model.Cource" />
+	<typeAlias alias="Student" type="com.ljx.model.Student" />
+
+	<resultMap id="courceResult" class="Cource">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="credit" column="credit" />
+	</resultMap>
+
+	<resultMap id="studentResult" class="Student">
+		<result property="id" column="stuId" />
+		<result property="name" column="stuName" />
+		<result property="birth" column="birth" />
+		<result property="score" column="score" />
+	</resultMap>
+
+	<resultMap class="Cource" id="courceWithStudentResult"
+		extends="cource.courceResult">
+		<result property="stuList" resultMap="cource.studentResult"
+			javaType="java.util.List" />
+	</resultMap>
+
 	<select id="selectById" parameterClass="int" resultClass="Cource">
-		select * from tbl_cource 
+		select
+		* from tbl_cource
 		where id = #id#
+	</select>
+
+	<select id="selectAllByCodition" parameterClass="Cource"
+		resultMap="courceResult">
+		select * from tbl_cource
+		<dynamic prepend="where">
+			<isNotEmpty property="id" prepend="and"
+				removeFirstPrepend="true">
+				id = #id#
+			</isNotEmpty>
+			<isNotEmpty property="name" prepend="and">
+				name = #name#
+			</isNotEmpty>
+			<isNotEmpty property="credit" prepend="and">
+				credit = #credit#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="selectStudentByCourceId" parameterClass="int"
+		resultMap="courceWithStudentResult">
+		select
+		c.id as id ,
+		c.name as name ,
+		c.credit as credit,
+		s.id as stuId,
+		s.name as stuName,
+		s.birth as birth,
+		s.score as score
+		from tbl_student_cource sc
+		left join tbl_cource c on c.id = sc.cource_id
+		left join tbl_student s on s.id = sc.student_id
+		where c.id = #id#
+	</select>
+
+	<select id="selectStudentByIds" parameterClass="java.util.List"
+		resultMap="courceWithStudentResult">
+		select
+		c.id as id ,
+		c.name as name ,
+		c.credit as credit,
+		s.id as stuId,
+		s.name as stuName,
+		s.birth as birth,
+		s.score as score
+		from tbl_student_cource sc
+		left join tbl_cource c on c.id = sc.cource_id
+		left join tbl_student s on s.id = sc.student_id
+		<dynamic prepend="where">
+			<isParameterPresent prepend="and"
+				removeFirstPrepend="true">
+				c.id in
+				<iterate open="(" close=")" conjunction=",">
+					#[]#
+				</iterate>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+
+	<select id="selectStudentByCourceIds" parameterClass="java.util.List"
+		resultMap="courceWithStudentResult">
+		select
+		c.id as id ,
+		c.name as name ,
+		c.credit as credit,
+		s.id as stuId,
+		s.name as stuName,
+		s.birth as birth,
+		s.score as score
+		from tbl_student_cource sc
+		left join tbl_cource c on c.id = sc.cource_id
+		left join tbl_student s on s.id = sc.student_id
+		<dynamic prepend="where">
+			<isParameterPresent prepend="and"
+				removeFirstPrepend="true">
+				c.id in
+				<iterate open="(" close=")" conjunction=",">
+					#[].id#
+				</iterate>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+
+	<select id="selectStudentByCourceIdsWithMap" parameterClass="java.util.HashMap"
+		resultMap="courceWithStudentResult">
+		select
+		c.id as id ,
+		c.name as name ,
+		c.credit as credit,
+		s.id as stuId,
+		s.name as stuName,
+		s.birth as birth,
+		s.score as score
+		from tbl_student_cource sc
+		left join tbl_cource c on c.id = sc.cource_id
+		left join tbl_student s on s.id = sc.student_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				c.id = #id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="name">
+				c.name = #name#
+			</isNotEmpty>
+		</dynamic>
 	</select>
 
 </sqlMap>

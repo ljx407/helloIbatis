@@ -4,6 +4,7 @@
 <sqlMap>
 	<!-- 通过typeAlias使得我们在下面使用Student实体类的时候不需要写包名 -->
 	<typeAlias alias="Student" type="com.ljx.model.Student" />
+	
 	<!-- 这样以后改了sql，就不需要去改java代码了 -->
 	<!-- id表示select里的sql语句，resultClass表示返回结果的类型 -->
 	<select id="selectAllStudent" resultClass="Student">
