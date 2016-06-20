@@ -141,10 +141,13 @@ public class CourceDaoImpl implements CourceDao {
 	@Override
 	public boolean insertBatch(List<Cource> list) {
 		try {
+			sqlMapClient.startTransaction();
 			sqlMapClient.startBatch();
 			for(Cource c : list) {
 				sqlMapClient.insert("cource.insert", c);
 			}
+			sqlMapClient.executeBatch();
+			sqlMapClient.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
