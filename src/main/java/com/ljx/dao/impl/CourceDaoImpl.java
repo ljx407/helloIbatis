@@ -116,6 +116,63 @@ public class CourceDaoImpl implements CourceDao {
 		return queryForList;
 	}
 	
+	@Override
+	public boolean insert(Cource c) {
+		try {
+			Integer result = (Integer)sqlMapClient.insert("cource.insert", c);
+			return result > 0 ? true : false ; 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean insertDynamic(Cource c) {
+		try {
+			Integer result = (Integer)sqlMapClient.insert("cource.insertDynamic", c);
+			return result > 0 ? true : false ; 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean insertBatch(List<Cource> list) {
+		try {
+			sqlMapClient.startBatch();
+			for(Cource c : list) {
+				sqlMapClient.insert("cource.insert", c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		try {
+			int result = sqlMapClient.delete("cource.deleteById",id);
+			return result > 0 ? true : false ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateById(Cource c) {
+		try {
+			int result = sqlMapClient.update("cource.updateById",c);
+			return result > 0 ? true : false ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	
 	
 

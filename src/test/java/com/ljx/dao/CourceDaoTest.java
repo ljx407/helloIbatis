@@ -96,5 +96,65 @@ public class CourceDaoTest {
 		List<Cource> selectAllByCodition = courceDaoImpl.selectStudentByCourceIdsWithMap(map);
 		assertThat(selectAllByCodition,notNullValue());
 	}
+	
+	@Test
+	public void testInsert() {
+		Cource c = new Cource() ;
+		c.setName("高数");
+		c.setCredit(99);
+		
+		boolean b = courceDaoImpl.insert(c);
+		
+		logger.info(c);
+		assertThat(b,is(true));
+	}
+	
+	@Test
+	public void testInsertDynamic() {
+		Cource c = new Cource() ;
+		c.setName("高数");
+		c.setCredit(99);
+		
+		boolean b = courceDaoImpl.insertDynamic(c);
+		
+		logger.info(c);
+		assertThat(b,is(true));
+	}
+	
+	@Test
+	public void insertBatch() {
+		Cource c = new Cource() ;
+		c.setName("物理");
+		c.setCredit(99);
+		
+		Cource c1 = new Cource() ;
+		c1.setName("化学");
+		c1.setCredit(99);
+		
+		List<Cource> l = new ArrayList<Cource>();
+		l.add(c1);
+		l.add(c);
+		
+		boolean b = courceDaoImpl.insertBatch(l);
+		
+		logger.info(c);
+		assertThat(b,is(true));
+	}
+	
+	@Test
+	public void testDelete() {
+		boolean b = courceDaoImpl.delete(9);
+		assertThat(b,is(true));
+	}
+	
+	@Test
+	public void testUpdateById() {
+		Cource c = new Cource() ;
+		c.setName("大学物理");
+		c.setCredit(99);
+		c.setId(11);
+		boolean result = courceDaoImpl.updateById(c);
+		assertThat(result,is(true));
+	}
 
 }

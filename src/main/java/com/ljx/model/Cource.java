@@ -31,5 +31,9 @@ public class Cource {
 	public void setStuList(List<Student> stuList) {
 		this.stuList = stuList;
 	}
+	@Override
+	public String toString() {
+		return "Cource [id=" + id + ", name=" + name + ", credit=" + credit + "]";
+	}
 	
 }

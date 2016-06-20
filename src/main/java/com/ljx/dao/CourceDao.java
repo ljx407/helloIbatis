@@ -18,5 +18,14 @@ public interface CourceDao {
 	
 	public List<Cource> selectStudentByCourceIdsWithMap(Map<String,String> paraMap) ;
 	
+	public boolean insertBatch(List<Cource> list) ;
+	
+	public boolean insertDynamic(Cource c) ;
+	
+	public boolean insert(Cource c) ;
+	
+	public boolean delete(int id);
+	
+	public boolean updateById(Cource c);
 	
 }
