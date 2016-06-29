@@ -35,7 +35,7 @@ public class StudentDaoImpl implements StudentDao {
 		Object object = null;
 		boolean flag = false;
 		try {
-			object = sqlMapClient.insert("addStudent", student);
+			object = sqlMapClient.insert("student.addStudent", student);
 			logger.info("添加学生信息的返回值：" + object);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
@@ -50,7 +50,7 @@ public class StudentDaoImpl implements StudentDao {
 		boolean flag = false;
 		Object object = null;
 		try {
-			object = sqlMapClient.delete("deleteStudentById", id);
+			object = sqlMapClient.delete("student.deleteStudentById", id);
 			logger.info("删除学生信息的返回值：" + object + "，这里返回的是影响的行数");
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
@@ -65,7 +65,7 @@ public class StudentDaoImpl implements StudentDao {
 		boolean flag = false;
 		Object object = false;
 		try {
-			object = sqlMapClient.update("updateStudent", student);
+			object = sqlMapClient.update("student.updateStudent", student);
 			logger.info("更新学生信息的返回值：" + object + "，返回影响的行数");
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
@@ -80,7 +80,7 @@ public class StudentDaoImpl implements StudentDao {
 	public List<Student> selectAllStudent() {
 		List<Student> students = null;
 		try {
-			students = sqlMapClient.queryForList("selectAllStudent");
+			students = sqlMapClient.queryForList("student.selectAllStudent");
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
 		}
@@ -91,7 +91,7 @@ public class StudentDaoImpl implements StudentDao {
 	public List<Student> selectStudentByName(String name) {
 		List<Student> students = null;
 		try {
-			students = sqlMapClient.queryForList("selectStudentByName", name);
+			students = sqlMapClient.queryForList("student.selectStudentByName", name);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
 		}
@@ -101,7 +101,7 @@ public class StudentDaoImpl implements StudentDao {
 	public Student selectStudentById(int id) {
 		Student student = null;
 		try {
-			student = (Student) sqlMapClient.queryForObject("selectStudentById", id);
+			student = (Student) sqlMapClient.queryForObject("student.selectStudentById", id);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(),e);
 		}

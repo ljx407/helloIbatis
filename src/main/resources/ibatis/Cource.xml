@@ -5,24 +5,24 @@
 <sqlMap namespace="cource">
 
 	<typeAlias alias="Cource" type="com.ljx.model.Cource" />
-	<typeAlias alias="Student" type="com.ljx.model.Student" />
-
 	<resultMap id="courceResult" class="Cource">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="credit" column="credit" />
 	</resultMap>
 
+	<!-- 
+	<typeAlias alias="Student" type="com.ljx.model.Student" />
 	<resultMap id="studentResult" class="Student">
 		<result property="id" column="stuId" />
 		<result property="name" column="stuName" />
 		<result property="birth" column="birth" />
 		<result property="score" column="score" />
 	</resultMap>
-
+ 	-->
 	<resultMap class="Cource" id="courceWithStudentResult"
 		extends="cource.courceResult">
-		<result property="stuList" resultMap="cource.studentResult"
+		<result property="stuList" resultMap="student.studentResult"
 			javaType="java.util.List" />
 	</resultMap>
 
@@ -49,6 +49,7 @@
 		</dynamic>
 	</select>
 
+	<!-- 
 	<select id="selectStudentByCourceId" parameterClass="int"
 		resultMap="courceWithStudentResult">
 		select
@@ -59,6 +60,22 @@
 		s.name as stuName,
 		s.birth as birth,
 		s.score as score
+		from tbl_student_cource sc
+		left join tbl_cource c on c.id = sc.cource_id
+		left join tbl_student s on s.id = sc.student_id
+		where c.id = #id#
+	</select>
+	 -->
+	<!-- c.name,s.name系统会自动识别并封装近相关的bean中 -->
+	<select id="selectStudentByCourceId" parameterClass="int"
+		resultMap="courceWithStudentResult">
+		select
+			c.id,
+			c.name,
+			c.credit,
+			s.name,
+			s.birth,
+			s.score
 		from tbl_student_cource sc
 		left join tbl_cource c on c.id = sc.cource_id
 		left join tbl_student s on s.id = sc.student_id
